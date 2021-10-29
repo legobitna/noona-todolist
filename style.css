@@ -8,6 +8,7 @@ body {
 .title {
   text-align: center;
   font-size: 4vw;
+  width: 100%;
 }
 .add-task-section {
   display: flex;
@@ -57,29 +58,38 @@ input:focus {
 .columns {
   display: flex;
   justify-content: space-around;
-  margin: 5em;
+  margin: 5vh;
 }
 .column {
   background-color: white;
-  width: 500px;
+  max-width: 500px;
+  width:100%;
   min-height: 600px;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .task {
   list-style-type: none;
-  margin-top: 10px;
+  margin-bottom: 10px;
   background-color: #eed47d;
   border: 1px solid #173f5f;
   border-radius: 4px;
   min-height: 80px;
-  width: 400px;
+  max-width: 400px;
+  width:100%;
   position: relative;
+ 
+
+}
+ul{
+    padding:0 2vw;
 }
 
 .task-content {
   margin: 20px;
   margin-top: 10px;
+  inline-size: 300px;
+  overflow-wrap: break-word;
 }
 
 .tool-box {
@@ -96,12 +106,37 @@ input:focus {
     border-style: dashed;
 }
 
-/* .form_label:focus{
-    position: absolute;
-    top: 0;
-    display: block;
-    transition: 0.2s;
-    font-size: 1rem;
-    color: $primary;
-    font-weight:700;  
-} */
+.fas:hover{
+    color:cornflowerblue
+}
+
+.input-modify {
+    margin:1em;
+    max-width:300px;
+    min-height: 60px;
+    width:100%;
+    
+}
+.display-none{
+    display:none;
+}
+
+.column-title{
+    text-align: center;
+}
+
+@media screen and (max-width: 48rem) {
+    .columns{
+        flex-direction: column;
+    }
+
+    .add-task-section input{
+        width: 70%;
+    }
+    .column{
+        margin-bottom: 1em;
+    }
+    .input-modify{
+        width:200px
+    }
+}

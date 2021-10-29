@@ -1,10 +1,18 @@
 let addButton = document.getElementById("add-button");
 let taskInput = document.getElementById("task-input");
+let tasks = [];
+
 let task;
 addButton.addEventListener("click", addTask);
 
 function addTask() {
   let taskValue = taskInput.value;
+  let item = {
+    id: randomIdGenerator(),
+    task: taskValue,
+    status: "plan",
+  };
+
   let task = document.createElement("li");
   task.classList.add("task");
   task.setAttribute("draggable", "true");
@@ -16,14 +24,45 @@ function addTask() {
 
   let toolBox = document.createElement("div");
   toolBox.classList.add("tool-box");
-  toolBox.innerHTML = ` <i class="fas fa-edit"></i>
-  <i class="fas fa-trash-alt "></i>`;
+  toolBox.innerHTML = ` <i class="fas fa-save display-none" onclick="save(event)"></i><i class="fas fa-edit" onclick="editTask(event)"></i>
+  <i class="fas fa-trash-alt " onclick="deleteTask(event)"></i>`;
 
   task.appendChild(taskContent);
   task.appendChild(toolBox);
 
-  let tasks = document.getElementById("plan-tasks");
+  let tasks = document.getElementById("plan");
   tasks.appendChild(task);
+}
+
+function deleteTask(event) {
+  var tasks = event.target.parentNode.parentNode.parentNode;
+  var task = event.target.parentNode.parentNode;
+  tasks.removeChild(task);
+}
+
+function editTask(event) {
+  event.currentTarget.classList.add("display-none");
+  document.querySelector(".fa-save").classList.remove("display-none");
+
+  let parents = event.currentTarget.parentNode.parentNode;
+  let textBlock = event.currentTarget.parentNode.previousSibling;
+  let textAreaBlock = document.createElement("textarea");
+  textAreaBlock.innerHTML = textBlock.innerHTML;
+  textAreaBlock.classList.add("input-modify");
+  parents.replaceChild(textAreaBlock, textBlock);
+}
+
+function save(event) {
+  event.currentTarget.classList.add("display-none");
+  document.querySelector(".fa-edit").classList.remove("display-none");
+  let parents = event.currentTarget.parentNode.parentNode;
+
+  let textAreaBlock = document.querySelector("textarea");
+  let value = textAreaBlock.value;
+  let textBlock = document.createElement("div");
+  textBlock.innerHTML = value;
+  textBlock.classList.add("task-content");
+  parents.replaceChild(textBlock, textAreaBlock);
 }
 
 function dragStart(e) {
@@ -60,3 +99,8 @@ for (let i = 0; i < columns.length; i++) {
   column.addEventListener("dragleave", dragLeave);
   column.addEventListener("drop", drop);
 }
+
+function randomIdGenerator() {
+  return "_" + Math.random().toString(36).substr(2, 9);
+}
+console.log("id", randomIdGenerator());
